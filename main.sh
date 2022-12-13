@@ -61,6 +61,14 @@ cd -
 
 sphinx-apidoc -o $doc_dir/_user/temp_ws/src/python_interface/docs/source $doc_dir/_user/temp_ws/src/python_interface/python_interface
 
+cp -r as2_core/ $doc_dir/_user
+
+cd $doc_dir/_user/as2_core
+
+doxygen doxygen.dox
+
+cd -
+
 echo ::group:: Creating temp directory
 tmp_dir=$(mktemp -d -t pages-XXXXXXXXXX)
 echo Temp directory \"$tmp_dir\" is created
