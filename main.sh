@@ -48,21 +48,31 @@ fi
 source /opt/ros/$ROS_DISTRO/setup.bash
 mkdir -p $doc_dir/_user/temp_ws/src # In case there is a python project to be built for autodoc to generate documentation
 
-cp -r python_interface/ $doc_dir/_user/temp_ws/src
-cd $doc_dir/_user/temp_ws/
-colcon build --symlink-install
-source install/setup.bash
-cd -
+shopt -s dotglob
+shopt -s nullglob
+array=(*/)
 
-sphinx-apidoc -o $doc_dir/_user/temp_ws/src/python_interface/docs/source $doc_dir/_user/temp_ws/src/python_interface/python_interface
+for dir in "${array[@]}"; do
+    if [[ -f "$dir/setup.py" ]]; then # This is a python project    
+        echo "$dir is a python project, performing compilation";
+        cp -r $dir $doc_dir/_user/temp_ws/src
+        cd $doc_dir/_user/temp_ws/
+        colcon build --symlink-install
+        source install/setup.bash
+        cd -
+        sphinx-apidoc -o $doc_dir/_user/temp_ws/src/"$dir"docs/source $doc_dir/_user/temp_ws/src/"$dir""$dir"
 
-cp -r as2_core/ $doc_dir/_user
+    elif [[ -f "$dir/doxygen.dox" ]]; then # This is a c++ project, no need to compile
+        echo "$dir is a c++ project, performing doxygen build";
+        cp -r $dir $doc_dir/_user
+        cd $doc_dir/_user/$dir
+        doxygen doxygen.dox
+        cd -
+    fi;
+    done
 
-cd $doc_dir/_user/as2_core
-
-doxygen doxygen.dox
-
-cd -
+shopt -u dotglob
+shopt -u nullglob
 
 echo ::group:: Creating temp directory
 tmp_dir=$(mktemp -d -t pages-XXXXXXXXXX)
