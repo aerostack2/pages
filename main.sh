@@ -48,10 +48,6 @@ fi
 source /opt/ros/$ROS_DISTRO/setup.bash
 mkdir -p $doc_dir/_user/temp_ws/src # In case there is a python project to be built for autodoc to generate documentation
 
-shopt -s dotglob
-shopt -s nullglob
-array=(*/)
-
 cp -r python_interface/ $doc_dir/_user/temp_ws/src
 cd $doc_dir/_user/temp_ws/
 colcon build --symlink-install
