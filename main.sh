@@ -68,6 +68,8 @@ for dir in "${array[@]}"; do
         cd $doc_dir/_user/$dir
         doxygen doxygen.dox
         cd -
+    fi;
+    done
 
 echo ::group:: Creating temp directory
 tmp_dir=$(mktemp -d -t pages-XXXXXXXXXX)
