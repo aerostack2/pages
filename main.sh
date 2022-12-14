@@ -59,7 +59,7 @@ source install/setup.bash
 
 cd -
 
-sphinx-apidoc -o $doc_dir/_user/temp_ws/src/python_interface/docs/source $doc_dir/_user/temp_ws/src/python_interface/python_interface
+sphinx-apidoc -T -o $doc_dir/_user/temp_ws/src/python_interface/docs/source $doc_dir/_user/temp_ws/src/python_interface/python_interface
 
 cp -r as2_core/ $doc_dir/_user
 
