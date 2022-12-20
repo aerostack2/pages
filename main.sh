@@ -93,7 +93,7 @@ for dir in "${arrModules[@]}"; do
 
     elif [[ -f ""$module_dir"/doxygen.dox" ]]; then # This is a c++ project, no need to compile
         echo ""$module_dir"/ is a c++ project, performing doxygen build";
-        cp -r "$module_dir" $doc_dir/_user
+        cp -r "$module_dir" $folder
         cd $folder/$dir/
         doxygen doxygen.dox
         cd -

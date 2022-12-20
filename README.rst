@@ -1,9 +1,6 @@
-=========================
-Sphinx to GitHub Pages V2
-=========================
-
-.. image:: https://img.shields.io/github/stars/sphinx-notes/pages.svg?style=social&label=Star&maxAge=2592000
-   :target: https://github.com/sphinx-notes/pages
+========================================
+Sphinx to GitHub Pages V2 For Aerostack2
+========================================
 
 Help you deploying your Sphinx documentation to Github Pages.
 
