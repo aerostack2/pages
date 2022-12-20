@@ -62,8 +62,9 @@ shopt -s nullglob
 array=(*/)
 
 echo ::group:: Organizing workspace
+shopt -s globstar
 for dir in "${arrModules[@]}"; do
-    shopt -s globstar
+    echo $dir
     while true; do
         for d in "$as2_dir"**/$dir ; do
             module_dir=$d
