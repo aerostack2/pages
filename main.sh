@@ -63,7 +63,16 @@ array=(*/)
 
 echo ::group:: Organizing workspace
 for dir in "${arrModules[@]}"; do
-    module_dir="$(find "$as2_dir" -maxdepth 2 -type d -name "$dir")"
+    shopt -s globstar
+    while true; do
+        for d in ./**/$dir ; do
+            module_dir=$d
+            break 2 # escape both loops
+        done
+        echo "'$d' not found, please try again."
+    done
+    echo "rest of script etc"
+    shopt -u globstar
     echo $module_dir
     if [[ -f ""$module_dir"/setup.py" ]]; then # This is a python project    
         echo ""$module_dir"/ is a python project, performing compilation";
