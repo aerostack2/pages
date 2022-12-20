@@ -65,13 +65,14 @@ echo ::group:: Organizing workspace
 for dir in "${arrModules[@]}"; do
     shopt -s globstar
     while true; do
-        for d in ./**/$dir ; do
+        for d in "$as2_dir"**/$dir ; do
             module_dir=$d
             break 2 # escape both loops
         done
-        echo "'$d' not found, please try again."
+        echo "'$d' not found, breaking."
+        break
     done
-    echo "rest of script etc"
+
     shopt -u globstar
     echo $module_dir
     if [[ -f ""$module_dir"/setup.py" ]]; then # This is a python project    
