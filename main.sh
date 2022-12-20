@@ -71,25 +71,30 @@ for dir in "${arrModules[@]}"; do
             module_dir=$d
             break 2 # escape both loops
         done
-        echo "'$d' not found, breaking."
+        echo "'$dir' not found."
         break
     done
 
     shopt -u globstar
+
+    for _folder in $(dirname $(grep -R --exclude=*.py -l "$dir" "$doc_dir")); do 
+        folder=$_folder
+    done
+
     echo $module_dir
     if [[ -f ""$module_dir"/setup.py" ]]; then # This is a python project    
         echo ""$module_dir"/ is a python project, performing compilation";
-        cp -r "$module_dir"/ $doc_dir/_user/temp_ws/src
-        cd $doc_dir/_user/temp_ws/
+        cp -r "$module_dir"/ $folder/temp_ws/src
+        cd $folder/temp_ws/
         colcon build --symlink-install
         source install/setup.bash
         cd -
-        sphinx-apidoc -o $doc_dir/_user/temp_ws/src/"$dir"/docs/source $doc_dir/_user/temp_ws/src/"$dir"/"$dir"/
+        sphinx-apidoc -o $folder/temp_ws/src/"$dir"/docs/source $folder/temp_ws/src/"$dir"/"$dir"/
 
     elif [[ -f ""$module_dir"/doxygen.dox" ]]; then # This is a c++ project, no need to compile
         echo ""$module_dir"/ is a c++ project, performing doxygen build";
         cp -r "$module_dir" $doc_dir/_user
-        cd $doc_dir/_user/$dir/
+        cd $folder/$dir/
         doxygen doxygen.dox
         cd -
     fi;
