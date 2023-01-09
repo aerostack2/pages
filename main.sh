@@ -55,6 +55,7 @@ fi
 echo ::endgroup::
 
 source /opt/ros/$ROS_DISTRO/setup.bash
+# In case there is a python project to be built for autodoc to generate documentation
 
 shopt -s dotglob
 shopt -s nullglob
@@ -76,14 +77,14 @@ for dir in "${arrModules[@]}"; do
 
     shopt -u globstar
 
-    for _folder in $(dirname $(grep -R --exclude=*.py -l "$dir" "$doc_dir")); do 
+    for _folder in $(dirname $(grep -R --exclude=*.py -l "$dir" ".docs/")); do 
         folder=$_folder
     done
 
     echo $folder
     if [[ -f ""$module_dir"/setup.py" ]]; then # This is a python project    
         echo ""$module_dir"/ is a python project, performing compilation";
-        mkdir -p $folder/temp_ws/src 
+        mkdir -p $folder/temp_ws/src
         cp -r "$module_dir"/ $folder/temp_ws/src
         cd $folder/temp_ws/
         colcon build --symlink-install
