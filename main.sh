@@ -55,7 +55,6 @@ fi
 echo ::endgroup::
 
 source /opt/ros/$ROS_DISTRO/setup.bash
-mkdir -p $doc_dir/_user/temp_ws/src # In case there is a python project to be built for autodoc to generate documentation
 
 shopt -s dotglob
 shopt -s nullglob
@@ -79,6 +78,7 @@ for dir in "${arrModules[@]}"; do
 
     for _folder in $(dirname $(grep -R --exclude=*.py -l "$dir" "$doc_dir")); do 
         folder=$_folder
+        mkdir -p $_folder/temp_ws/src 
     done
 
     echo $module_dir
