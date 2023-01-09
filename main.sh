@@ -77,7 +77,9 @@ for dir in "${arrModules[@]}"; do
 
     shopt -u globstar
 
-    for _folder in $(dirname $(grep -R --exclude=*.py -l "$dir" ".docs/")); do 
+    ls -d */
+
+    for _folder in $(dirname $(grep -R --exclude=*.py -l "$dir" "docs/")); do 
         folder=$_folder
     done
 
