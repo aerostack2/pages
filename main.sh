@@ -78,12 +78,12 @@ for dir in "${arrModules[@]}"; do
 
     for _folder in $(dirname $(grep -R --exclude=*.py -l "$dir" "$doc_dir")); do 
         folder=$_folder
-        mkdir -p $_folder/temp_ws/src 
     done
 
-    echo $module_dir
+    echo $folder
     if [[ -f ""$module_dir"/setup.py" ]]; then # This is a python project    
         echo ""$module_dir"/ is a python project, performing compilation";
+        mkdir -p $folder/temp_ws/src 
         cp -r "$module_dir"/ $folder/temp_ws/src
         cd $folder/temp_ws/
         colcon build --symlink-install
