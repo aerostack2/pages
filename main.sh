@@ -93,11 +93,11 @@ for dir in "${arrModules[@]}"; do
         cd -
         sphinx-apidoc -o $folder/temp_ws/src/"$dir"/docs/source $folder/temp_ws/src/"$dir"/"$dir"/
 
-    elif [[ -f ""$module_dir"/doxygen.dox" ]]; then # This is a c++ project, no need to compile
+    elif [[ -f ""$module_dir"/Doxyfile" ]]; then # This is a c++ project, no need to compile
         echo ""$module_dir"/ is a c++ project, performing doxygen build";
         cp -r "$module_dir" $folder
         cd $folder/$dir/
-        doxygen doxygen.dox
+        doxygen
         cd -
     fi;
     done
